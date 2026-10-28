@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { COVERAGE_AREAS } from '../data/totusData';
+import { COVERAGE_AREAS, getWhatsAppUrl } from '../data/totusData';
 
 export function TotusBrandMark({
   className = 'w-10 h-10',
@@ -17,7 +17,7 @@ export function TotusBrandMark({
         loading="eager"
       />
       {showWordmark && (
-        <span className="font-display font-bold tracking-wider text-white text-base sm:text-lg whitespace-nowrap">
+        <span className="font-brand font-bold tracking-wider text-white text-base sm:text-lg whitespace-nowrap">
           TOTU&apos;S TECNOLOGIA
         </span>
       )}
@@ -356,15 +356,14 @@ export function HeroFilamentCircuitVisual({
       <div className="relative z-10 space-y-3 pt-3 border-t border-slate-800/80">
         <div className="flex items-center justify-between gap-2">
           <span className="text-xs font-medium text-slate-300">{current.label}</span>
-          {onSelectDomain && (
-            <button
-              type="button"
-              onClick={() => onSelectDomain(current.service)}
-              className="text-xs font-medium text-[#F3C742] hover:text-[#FF9900] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
-            >
-              Cotar esta área →
-            </button>
-          )}
+          <a
+            href={getWhatsAppUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs font-medium text-[#F3C742] hover:text-[#FF9900] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+          >
+            Cotar esta área →
+          </a>
         </div>
         <div className="grid grid-cols-3 gap-1.5 p-1 bg-[#080E18] rounded-lg border border-slate-800">
           <button

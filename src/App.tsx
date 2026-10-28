@@ -61,15 +61,10 @@ export default function App() {
   const [activeSegmentId, setActiveSegmentId] = useState<
     'residencial' | 'condominial' | 'comercial'
   >('residencial');
-  const [selectedSegmentForForm, setSelectedSegmentForForm] = useState<
-    'Residencial' | 'Condomínio' | 'Comercial'
-  >('Condomínio');
-  const [selectedServicesForForm, setSelectedServicesForForm] = useState<string[]>([
-    'Instalações Elétricas e Manutenção',
-    "Portaria Autônoma (CondTotu's)",
-  ]);
   const [activeModalProject, setActiveModalProject] = useState<PortfolioProject | null>(null);
   const [activeModalSpecialty, setActiveModalSpecialty] = useState<SpecialtyItem | null>(null);
+
+  const whatsappDirectUrl = getWhatsAppUrl();
 
   const scrollToTop = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
@@ -95,30 +90,6 @@ export default function App() {
     }
   };
 
-  const handleSelectSegmentQuote = (
-    formValue: 'Residencial' | 'Condomínio' | 'Comercial',
-    recommended: string[]
-  ) => {
-    setSelectedSegmentForForm(formValue);
-    setSelectedServicesForForm(recommended);
-    scrollToSection('contato');
-  };
-
-  const handleToggleServiceInQuote = (serviceTitle: string) => {
-    setSelectedServicesForForm((prev) =>
-      prev.includes(serviceTitle)
-        ? prev.filter((item) => item !== serviceTitle)
-        : [...prev, serviceTitle]
-    );
-  };
-
-  const handleQuickQuoteSpecialty = (serviceTitle: string) => {
-    setSelectedServicesForForm((prev) =>
-      prev.includes(serviceTitle) ? prev : [...prev, serviceTitle]
-    );
-    scrollToSection('contato');
-  };
-
   const activeSegment =
     SEGMENTS.find((seg) => seg.id === activeSegmentId) || SEGMENTS[0];
 
@@ -127,7 +98,7 @@ export default function App() {
       {/* 1. Header Fixo (Sticky) — Ajustado para Mobile */}
       <header className="sticky top-0 z-40 bg-[#080E18]/95 backdrop-blur-md border-b border-slate-800/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-20 flex items-center justify-between gap-4">
-          {/* Logotipo Oficial da TOTU'S TECNOLOGIA */}
+          {/* Logotipo Oficial da TOTU'S TECNOLOGIA com Fonte Montserrat */}
           <a
             href="#topo"
             onClick={scrollToTop}
@@ -138,12 +109,12 @@ export default function App() {
               alt="TOTU'S TECNOLOGIA"
               className="w-9 h-9 sm:w-12 sm:h-12 object-contain rounded-lg transition-transform group-hover:scale-105"
             />
-            <span className="font-display tracking-wider text-xs sm:text-base md:text-lg">
+            <span className="font-brand font-bold tracking-wider text-xs sm:text-base md:text-lg">
               TOTU&apos;S TECNOLOGIA
             </span>
           </a>
 
-          {/* Menu de Páginas (sem metodologia e sobre) */}
+          {/* Menu de Páginas */}
           <nav
             aria-label="Navegação Principal"
             className="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-medium text-slate-300"
@@ -178,15 +149,16 @@ export default function App() {
             </a>
           </nav>
 
-          {/* Botão de Ação Primário + Toggle Mobile */}
+          {/* Botão de Ação Primário Direto para WhatsApp + Toggle Mobile */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            <button
-              type="button"
-              onClick={() => scrollToSection('contato')}
+            <a
+              href={whatsappDirectUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="hidden sm:inline-flex items-center justify-center px-4 sm:px-5 py-2.5 rounded-xl bg-[#F3C742] hover:bg-[#FF9900] text-[#080E18] font-semibold text-xs sm:text-sm transition-colors whitespace-nowrap shrink-0 cursor-pointer"
             >
               Solicitar Orçamento
-            </button>
+            </a>
 
             <button
               type="button"
@@ -219,13 +191,15 @@ export default function App() {
                 </button>
               ))}
             </div>
-            <button
-              type="button"
-              onClick={() => scrollToSection('contato')}
-              className="w-full py-3 rounded-xl bg-[#F3C742] text-[#080E18] font-semibold text-xs sm:text-sm text-center cursor-pointer shadow-md"
+            <a
+              href={whatsappDirectUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block w-full py-3 rounded-xl bg-[#F3C742] hover:bg-[#FF9900] text-[#080E18] font-semibold text-xs sm:text-sm text-center cursor-pointer shadow-md"
             >
               Solicitar Orçamento Técnico
-            </button>
+            </a>
           </div>
         )}
       </header>
@@ -245,7 +219,6 @@ export default function App() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 lg:gap-10 items-center">
               {/* Coluna Esquerda: Mensagem Principal */}
               <div className="lg:col-span-7 flex flex-col justify-center space-y-3.5 sm:space-y-5">
-                {/* Título Principal Conforme Requisitado */}
                 <h1
                   className="font-display font-semibold tracking-tight text-white leading-[1.15]"
                   style={{ fontSize: 'clamp(1.65rem, 3.6vw, 3.35rem)' }}
@@ -254,29 +227,29 @@ export default function App() {
                   <span className="text-[#F3C742]">Segurança Eletrônica</span>, Redes e Energia
                 </h1>
 
-                {/* Subtítulo Técnico */}
                 <p className="text-xs sm:text-base text-slate-300 leading-relaxed max-w-2xl">
                   Projetos, instalações normatizadas e manutenção especializada em elétrica, CFTV
                   com IA, energia solar, controle de acesso e automação predial com execução de
                   técnico eletrotécnico qualificado em Campo Grande - MS e região.
                 </p>
 
-                {/* Botão de Ação Único */}
+                {/* Botão de Ação Único Direto para WhatsApp */}
                 <div className="pt-0.5">
-                  <button
-                    type="button"
-                    onClick={() => scrollToSection('contato')}
+                  <a
+                    href={whatsappDirectUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 sm:py-3.5 rounded-xl bg-[#F3C742] hover:bg-[#FF9900] text-[#080E18] font-semibold text-xs sm:text-base transition-colors whitespace-nowrap shrink-0 cursor-pointer shadow-[0_0_24px_rgba(243,199,66,0.22)]"
                   >
                     <span>Solicitar Orçamento Técnico</span>
                     <ArrowRight className="w-4 h-4" />
-                  </button>
+                  </a>
                 </div>
               </div>
 
               {/* Coluna Direita: Card Interativo com Lâmpada / Câmera / Cancela */}
               <div className="lg:col-span-5 flex">
-                <HeroFilamentCircuitVisual onSelectDomain={handleQuickQuoteSpecialty} />
+                <HeroFilamentCircuitVisual />
               </div>
             </div>
           </div>
@@ -359,7 +332,7 @@ export default function App() {
                 {activeSegment.summary}
               </p>
 
-              {/* Lista de Recursos Compacta (1 coluna no mobile, 2 colunas em telas maiores) */}
+              {/* Lista de Recursos Compacta */}
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
                 {activeSegment.features.map((feat) => (
                   <li
@@ -376,19 +349,15 @@ export default function App() {
               </ul>
 
               <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-end">
-                <button
-                  type="button"
-                  onClick={() =>
-                    handleSelectSegmentQuote(
-                      activeSegment.formValue,
-                      activeSegment.recommendedServices
-                    )
-                  }
+                <a
+                  href={whatsappDirectUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl bg-[#F3C742] hover:bg-[#FF9900] text-[#080E18] text-xs sm:text-sm font-semibold transition-colors cursor-pointer"
                 >
                   <span>Solicitar Orçamento para {activeSegment.formValue}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -400,83 +369,64 @@ export default function App() {
           className="scroll-mt-14 sm:scroll-mt-20 py-8 sm:py-14 lg:py-16 bg-[#0B1220] border-y border-slate-800/80"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-              <div className="space-y-1.5 max-w-2xl">
-                <div className="text-xs font-mono tracking-wider text-[#F3C742]">
-                  ESPECIALIDADES TÉCNICAS
-                </div>
-                <h2 className="text-xl sm:text-3xl font-semibold text-white tracking-tight">
-                  Serviços Especializados
-                </h2>
-                <p className="text-slate-300 text-xs sm:text-sm">
-                  Selecione as especialidades desejadas para adicioná-las ao seu orçamento.
-                </p>
+            <div className="space-y-1.5 max-w-2xl">
+              <div className="text-xs font-mono tracking-wider text-[#F3C742]">
+                ESPECIALIDADES TÉCNICAS
               </div>
-
-              <div className="text-xs font-mono text-slate-400">
-                <span>NO ORÇAMENTO: </span>
-                <span className="text-[#F3C742] font-semibold tabular-nums">
-                  {selectedServicesForForm.length} selecionada(s)
-                </span>
-              </div>
+              <h2 className="text-xl sm:text-3xl font-semibold text-white tracking-tight">
+                Serviços Especializados
+              </h2>
+              <p className="text-slate-300 text-xs sm:text-sm">
+                Soluções normatizadas executadas diretamente para sua residência, condomínio ou empresa.
+              </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
-              {SPECIALTIES.map((spec) => {
-                const isSelected = selectedServicesForForm.includes(spec.title);
-                return (
-                  <div
-                    key={spec.id}
-                    className={`flex flex-col justify-between rounded-xl p-4 sm:p-5 transition-colors border ${
-                      isSelected
-                        ? 'bg-[#0F172A] border-[#F3C742]'
-                        : 'bg-[#080E18] border-slate-800 hover:border-slate-700'
-                    }`}
-                  >
-                    <div className="space-y-2.5">
-                      <div className="flex items-center justify-between">
-                        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#0F172A] border border-slate-800 flex items-center justify-center">
-                          {renderSpecialtyIcon(spec.iconName)}
-                        </div>
-                        <span className="text-[11px] font-mono text-slate-400">{spec.number}</span>
+              {SPECIALTIES.map((spec) => (
+                <div
+                  key={spec.id}
+                  className="flex flex-col justify-between rounded-xl p-4 sm:p-5 transition-colors border bg-[#080E18] border-slate-800 hover:border-[#F3C742]/60"
+                >
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#0F172A] border border-slate-800 flex items-center justify-center">
+                        {renderSpecialtyIcon(spec.iconName)}
                       </div>
-
-                      <div className="space-y-1">
-                        <h3 className="text-sm sm:text-base font-semibold text-white leading-snug">
-                          {spec.title}
-                        </h3>
-                        <p className="text-xs text-slate-300 leading-relaxed">
-                          {spec.description}
-                        </p>
-                      </div>
-
-                      <div className="text-[11px] font-mono text-[#F3C742]">{spec.norm}</div>
+                      <span className="text-[11px] font-mono text-slate-400">{spec.number}</span>
                     </div>
 
-                    <div className="mt-3.5 pt-3 border-t border-slate-800 flex items-center justify-between gap-2">
-                      <button
-                        type="button"
-                        onClick={() => handleToggleServiceInQuote(spec.title)}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors whitespace-nowrap cursor-pointer ${
-                          isSelected
-                            ? 'bg-[#F3C742] text-[#080E18] font-semibold'
-                            : 'bg-[#0F172A] text-slate-200 hover:text-[#F3C742] border border-slate-800'
-                        }`}
-                      >
-                        {isSelected ? '✓ No Orçamento' : '+ Incluir'}
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => setActiveModalSpecialty(spec)}
-                        className="text-xs text-slate-400 hover:text-[#F3C742] transition-colors cursor-pointer"
-                      >
-                        Detalhes →
-                      </button>
+                    <div className="space-y-1">
+                      <h3 className="text-sm sm:text-base font-semibold text-white leading-snug">
+                        {spec.title}
+                      </h3>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        {spec.description}
+                      </p>
                     </div>
+
+                    <div className="text-[11px] font-mono text-[#F3C742]">{spec.norm}</div>
                   </div>
-                );
-              })}
+
+                  <div className="mt-3.5 pt-3 border-t border-slate-800 flex items-center justify-between gap-2">
+                    <a
+                      href={whatsappDirectUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors whitespace-nowrap cursor-pointer bg-[#F3C742] hover:bg-[#FF9900] text-[#080E18]"
+                    >
+                      Solicitar Orçamento
+                    </a>
+
+                    <button
+                      type="button"
+                      onClick={() => setActiveModalSpecialty(spec)}
+                      className="text-xs text-slate-400 hover:text-[#F3C742] transition-colors cursor-pointer"
+                    >
+                      Detalhes →
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -500,13 +450,14 @@ export default function App() {
                 </p>
               </div>
 
-              <button
-                type="button"
-                onClick={() => scrollToSection('contato')}
+              <a
+                href={whatsappDirectUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-xs sm:text-sm font-medium text-[#F3C742] hover:text-[#FF9900] transition-colors whitespace-nowrap self-start sm:self-auto cursor-pointer"
               >
                 Solicitar orçamento para meu imóvel →
-              </button>
+              </a>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -550,16 +501,11 @@ export default function App() {
           </div>
         </section>
 
-        {/* 7. Formulário de Contato e Conversão */}
-        <ContactQuoteSection
-          selectedSegment={selectedSegmentForForm}
-          onChangeSegment={setSelectedSegmentForForm}
-          selectedServices={selectedServicesForForm}
-          onToggleService={handleToggleServiceInQuote}
-        />
+        {/* 6. Seção de Contato Simplificada */}
+        <ContactQuoteSection />
       </main>
 
-      {/* 8. Footer Institucional Simplificado */}
+      {/* 7. Footer Institucional Simplificado */}
       <footer className="bg-[#060A12] border-t border-slate-800/90 pt-10 pb-10 text-slate-400">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8">
@@ -571,7 +517,7 @@ export default function App() {
                   alt="TOTU'S TECNOLOGIA"
                   className="w-10 h-10 object-contain rounded-lg"
                 />
-                <span className="font-display tracking-wider text-base sm:text-lg">
+                <span className="font-brand font-bold tracking-wider text-base sm:text-lg">
                   TOTU&apos;S TECNOLOGIA
                 </span>
               </div>
@@ -584,29 +530,46 @@ export default function App() {
               </div>
             </div>
 
-            {/* Links Rápidos (sem metodologia e sobre) */}
+            {/* Links Rápidos */}
             <div className="lg:col-span-3 space-y-2">
               <div className="text-xs font-semibold uppercase tracking-wider text-slate-200">
                 Navegação
               </div>
               <ul className="space-y-1.5 text-xs">
                 <li>
-                  <a href="#solucoes" className="hover:text-[#F3C742] transition-colors">
+                  <a
+                    href="#solucoes"
+                    onClick={(e) => scrollToSection('solucoes', e)}
+                    className="hover:text-[#F3C742] transition-colors"
+                  >
                     Soluções por Segmento
                   </a>
                 </li>
                 <li>
-                  <a href="#servicos" className="hover:text-[#F3C742] transition-colors">
+                  <a
+                    href="#servicos"
+                    onClick={(e) => scrollToSection('servicos', e)}
+                    className="hover:text-[#F3C742] transition-colors"
+                  >
                     Especialidades Técnicas
                   </a>
                 </li>
                 <li>
-                  <a href="#portfolio" className="hover:text-[#F3C742] transition-colors">
+                  <a
+                    href="#portfolio"
+                    onClick={(e) => scrollToSection('portfolio', e)}
+                    className="hover:text-[#F3C742] transition-colors"
+                  >
                     Portfólio de Projetos
                   </a>
                 </li>
                 <li>
-                  <a href="#contato" className="hover:text-[#F3C742] transition-colors">
+                  <a
+                    href={whatsappDirectUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#F3C742] transition-colors"
+                  >
                     Solicitar Orçamento
                   </a>
                 </li>
@@ -622,7 +585,7 @@ export default function App() {
                 <li>
                   <span className="text-slate-500">WhatsApp: </span>
                   <a
-                    href={getWhatsAppUrl()}
+                    href={whatsappDirectUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-slate-200 hover:text-[#F3C742] font-mono transition-colors"
@@ -669,7 +632,7 @@ export default function App() {
 
       {/* Botão Flutuante do WhatsApp */}
       <a
-        href={getWhatsAppUrl()}
+        href={whatsappDirectUrl}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Falar no WhatsApp com a TOTU'S TECNOLOGIA"
@@ -732,16 +695,15 @@ export default function App() {
                 <span className="text-xs font-mono text-[#F3C742]">
                   {activeModalProject.metrics}
                 </span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setActiveModalProject(null);
-                    scrollToSection('contato');
-                  }}
+                <a
+                  href={whatsappDirectUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setActiveModalProject(null)}
                   className="px-4 py-2 rounded-xl bg-[#F3C742] hover:bg-[#FF9900] text-[#080E18] font-semibold text-xs transition-colors cursor-pointer"
                 >
                   Solicitar Projeto
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -801,17 +763,15 @@ export default function App() {
             </div>
 
             <div className="pt-3 border-t border-slate-800 flex justify-end">
-              <button
-                type="button"
-                onClick={() => {
-                  const title = activeModalSpecialty.title;
-                  setActiveModalSpecialty(null);
-                  handleQuickQuoteSpecialty(title);
-                }}
+              <a
+                href={whatsappDirectUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setActiveModalSpecialty(null)}
                 className="px-4 py-2 rounded-xl bg-[#F3C742] hover:bg-[#FF9900] text-[#080E18] font-semibold text-xs transition-colors cursor-pointer"
               >
                 Orçar {activeModalSpecialty.shortTitle}
-              </button>
+              </a>
             </div>
           </div>
         </div>

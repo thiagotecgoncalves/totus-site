@@ -52,11 +52,14 @@ export interface PortfolioProject {
   schematicType: 'qgbt' | 'condtotus' | 'solar' | 'smart-home';
 }
 
+export const WHATSAPP_DIRECT_URL = 'https://api.whatsapp.com/send?phone=5567996294838';
+
 export const COMPANY_INFO = {
   name: "TOTU'S TECNOLOGIA",
   role: 'Técnico Eletrotécnico Especializado',
-  phoneDisplay: '(67) 998109-9412',
-  whatsappNumber: '5567998109412',
+  phoneDisplay: '(67) 99629-4838',
+  whatsappNumber: '5567996294838',
+  whatsappDirectUrl: WHATSAPP_DIRECT_URL,
   email: 'totusengenhariatec@gmail.com',
   instagramHandle: '@totusengtecnologia',
   instagramUrl: 'https://instagram.com/totusengtecnologia',
@@ -67,9 +70,8 @@ export const COMPANY_INFO = {
     "Olá! Preciso de suporte técnico imediato (elétrica/segurança) em meu condomínio/empresa com a TOTU'S TECNOLOGIA.",
 };
 
-export function getWhatsAppUrl(customMessage?: string): string {
-  const msg = customMessage || COMPANY_INFO.defaultWhatsappMessage;
-  return `https://wa.me/${COMPANY_INFO.whatsappNumber}?text=${encodeURIComponent(msg)}`;
+export function getWhatsAppUrl(_customMessage?: string): string {
+  return WHATSAPP_DIRECT_URL;
 }
 
 export const HERO_AUTHORITY_ITEMS = [

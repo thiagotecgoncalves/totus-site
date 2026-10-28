@@ -4,6 +4,7 @@
   --font-serif: "Playfair Display", "Cinzel", Georgia, serif;
   --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+  --font-brand: "Montserrat", sans-serif;
 }
 
 @layer base {
@@ -24,6 +25,10 @@
   h1, h2, .font-display {
     font-family: var(--font-serif);
     text-wrap: balance;
+  }
+
+  .font-brand {
+    font-family: var(--font-brand);
   }
 }
 
