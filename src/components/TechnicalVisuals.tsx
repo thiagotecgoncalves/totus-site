@@ -56,7 +56,7 @@ export function HeroFilamentCircuitVisual({
   const current = modeDetails[activeMode];
 
   return (
-    <div className="relative w-full h-full min-h-[260px] sm:min-h-[380px] lg:min-h-[450px] flex flex-col justify-between rounded-2xl bg-[#0B1220] border border-slate-800/90 p-3.5 sm:p-6 overflow-hidden">
+    <div className="relative w-full h-full min-h-[240px] sm:min-h-[340px] lg:min-h-[400px] flex flex-col justify-between rounded-2xl bg-[#0B1220] border border-slate-800/90 p-3.5 sm:p-5 overflow-hidden">
       {/* Subtle Ambient Radial Glow matching the reference image */}
       <div
         className="pointer-events-none absolute inset-0"
@@ -67,7 +67,7 @@ export function HeroFilamentCircuitVisual({
       />
 
       {/* Top Technical Header inside Visual Frame */}
-      <div className="relative z-10 flex items-center justify-between gap-2 border-b border-slate-800/80 pb-2.5 text-[11px] font-mono">
+      <div className="relative z-10 flex items-center justify-between gap-2 border-b border-slate-800/80 pb-2 text-[11px] font-mono">
         <span className="text-[#F3C742] truncate">{current.code}</span>
         <span className="text-slate-400 tabular-nums shrink-0">{current.metric}</span>
       </div>
@@ -76,7 +76,7 @@ export function HeroFilamentCircuitVisual({
       <div className="relative z-10 my-auto flex items-center justify-center py-1">
         <svg
           viewBox="0 0 420 310"
-          className="w-full max-w-[330px] sm:max-w-[380px] h-auto select-none transition-all duration-300"
+          className="w-full max-w-[260px] sm:max-w-[330px] lg:max-w-[360px] h-auto select-none transition-all duration-300"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           role="img"
@@ -411,7 +411,7 @@ export function ProjectSchematicGraphic({
   type: 'qgbt' | 'condtotus' | 'solar' | 'smart-home';
 }) {
   return (
-    <div className="relative w-full h-48 bg-[#080E18] overflow-hidden flex items-center justify-center border-b border-slate-800/80">
+    <div className="relative w-full h-32 sm:h-40 lg:h-44 bg-[#080E18] overflow-hidden flex items-center justify-center border-b border-slate-800/80">
       <div
         className="pointer-events-none absolute inset-0"
         style={{

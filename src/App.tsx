@@ -20,7 +20,6 @@ import {
   Zap,
 } from 'lucide-react';
 import {
-  COMPANY_INFO,
   PORTFOLIO_PROJECTS,
   PortfolioProject,
   SEGMENTS,
@@ -35,7 +34,7 @@ import {
 import { ContactQuoteSection } from './components/ContactQuoteSection';
 
 function renderSpecialtyIcon(iconName: SpecialtyItem['iconName']) {
-  const props = { className: 'w-5 h-5 text-[#F3C742]' };
+  const props = { className: 'w-4 h-4 sm:w-5 sm:h-5 text-[#F3C742]' };
   switch (iconName) {
     case 'zap':
       return <Zap {...props} />;
@@ -75,13 +74,18 @@ export default function App() {
   const scrollToSection = (id: string, e?: React.MouseEvent) => {
     if (e) e.preventDefault();
     setMobileMenuOpen(false);
-    if (id === 'topo') {
+    if (id === 'topo' || id === 'inicio') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
     const el = document.getElementById(id);
     if (el) {
-      const headerOffset = window.innerWidth < 640 ? 64 : 80;
+      const headerEl = document.querySelector('header');
+      const headerOffset = headerEl
+        ? headerEl.getBoundingClientRect().height
+        : window.innerWidth < 640
+          ? 56
+          : 80;
       const elementPosition = el.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({
         top: Math.max(0, elementPosition - headerOffset),
@@ -95,12 +99,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#080E18] text-slate-100 flex flex-col selection:bg-[#F3C742] selection:text-[#080E18]">
-      {/* 1. Header Fixo (Sticky) — Ajustado para Mobile */}
+      {/* 1. Header Fixo (Sticky) — Alinhado com max-w-7xl */}
       <header className="sticky top-0 z-40 bg-[#080E18]/95 backdrop-blur-md border-b border-slate-800/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-20 flex items-center justify-between gap-4">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-20 flex items-center justify-between gap-4">
           {/* Logotipo Oficial da TOTU'S TECNOLOGIA com Fonte Montserrat */}
           <a
-            href="#topo"
+            href="#inicio"
             onClick={scrollToTop}
             className="flex items-center gap-2.5 sm:gap-3 text-base sm:text-lg font-bold tracking-tight text-white whitespace-nowrap shrink-0 group cursor-pointer"
           >
@@ -204,9 +208,12 @@ export default function App() {
         )}
       </header>
 
-      <main id="topo" className="flex-1 scroll-mt-16 sm:scroll-mt-20">
-        {/* 2. Hero Section (Dobra Principal Compacta para Mobile) */}
-        <section className="relative pt-5 pb-8 sm:pt-12 sm:pb-14 lg:pt-14 lg:pb-18 overflow-hidden">
+      <main id="topo" className="flex-1">
+        {/* PÁGINA 1: Seção Inicial (100% da Altura Útil e Alinhada em max-w-7xl) */}
+        <section
+          id="inicio"
+          className="page-section relative py-6 sm:py-10 overflow-hidden bg-[#080E18]"
+        >
           <div
             className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[380px]"
             style={{
@@ -215,13 +222,13 @@ export default function App() {
             }}
           />
 
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 lg:gap-10 items-center">
+          <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
               {/* Coluna Esquerda: Mensagem Principal */}
-              <div className="lg:col-span-7 flex flex-col justify-center space-y-3.5 sm:space-y-5">
+              <div className="lg:col-span-7 flex flex-col justify-center space-y-4 sm:space-y-6">
                 <h1
                   className="font-display font-semibold tracking-tight text-white leading-[1.15]"
-                  style={{ fontSize: 'clamp(1.65rem, 3.6vw, 3.35rem)' }}
+                  style={{ fontSize: 'clamp(1.7rem, 3.6vw, 3.4rem)' }}
                 >
                   Soluções em{' '}
                   <span className="text-[#F3C742]">Segurança Eletrônica</span>, Redes e Energia
@@ -234,7 +241,7 @@ export default function App() {
                 </p>
 
                 {/* Botão de Ação Único Direto para WhatsApp */}
-                <div className="pt-0.5">
+                <div className="pt-1">
                   <a
                     href={whatsappDirectUrl}
                     target="_blank"
@@ -255,55 +262,57 @@ export default function App() {
           </div>
         </section>
 
-        {/* 3. Seção de Soluções (Com Seletor Residencial - Condomínio - Comercial) */}
+        {/* PÁGINA 2: Seção de Soluções (100% da Altura Útil e Alinhada em max-w-7xl) */}
         <section
           id="solucoes"
-          className="scroll-mt-14 sm:scroll-mt-20 py-8 sm:py-14 lg:py-16 bg-[#080E18] border-t border-slate-800/60"
+          className="page-section py-6 sm:py-10 bg-[#080E18] border-t border-slate-800/70"
         >
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5 sm:space-y-6">
-            <div className="space-y-1.5">
-              <h2 className="text-xl sm:text-3xl font-semibold text-white tracking-tight">
-                Soluções Sob Medida para Cada Necessidade
-              </h2>
-              <p className="text-slate-300 text-xs sm:text-sm">
-                Projetos e instalações desenvolvidos para o padrão de exigência de residências,
-                condomínios e empresas.
-              </p>
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5 sm:space-y-6">
+            <div className="space-y-4">
+              <div className="space-y-1.5">
+                <h2 className="text-xl sm:text-3xl font-semibold text-white tracking-tight">
+                  Soluções Sob Medida para Cada Necessidade
+                </h2>
+                <p className="text-slate-300 text-xs sm:text-sm">
+                  Projetos e instalações desenvolvidos para o padrão de exigência de residências,
+                  condomínios e empresas.
+                </p>
+              </div>
+
+              {/* Botões Seletores: Residencial - Condomínio - Comercial */}
+              <div className="grid grid-cols-3 gap-2 p-1.5 bg-[#0F172A] rounded-xl border border-slate-800 max-w-md">
+                {[
+                  { id: 'residencial', label: 'Residencial' },
+                  { id: 'condominial', label: 'Condomínio' },
+                  { id: 'comercial', label: 'Comercial' },
+                ].map((tab) => {
+                  const isActive = activeSegmentId === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      onClick={() =>
+                        setActiveSegmentId(
+                          tab.id as 'residencial' | 'condominial' | 'comercial'
+                        )
+                      }
+                      className={`py-2.5 px-3 rounded-lg text-xs sm:text-sm font-medium transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+                        isActive
+                          ? 'bg-[#F3C742] text-[#080E18] font-semibold shadow-sm'
+                          : 'text-slate-300 hover:text-white hover:bg-[#080E18]/50'
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Botões Seletores: Residencial - Condomínio - Comercial */}
-            <div className="grid grid-cols-3 gap-2 p-1.5 bg-[#0F172A] rounded-xl border border-slate-800 max-w-md">
-              {[
-                { id: 'residencial', label: 'Residencial' },
-                { id: 'condominial', label: 'Condomínio' },
-                { id: 'comercial', label: 'Comercial' },
-              ].map((tab) => {
-                const isActive = activeSegmentId === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    onClick={() =>
-                      setActiveSegmentId(
-                        tab.id as 'residencial' | 'condominial' | 'comercial'
-                      )
-                    }
-                    className={`py-2.5 px-3 rounded-lg text-xs sm:text-sm font-medium transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
-                      isActive
-                        ? 'bg-[#F3C742] text-[#080E18] font-semibold shadow-sm'
-                        : 'text-slate-300 hover:text-white hover:bg-[#080E18]/50'
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Card Compacto do Segmento Selecionado */}
+            {/* Card do Segmento Selecionado Alinhado em Toda a Largura (max-w-7xl) */}
             <div
               key={activeSegment.id}
-              className="rounded-2xl bg-[#0F172A] border border-slate-800 p-4 sm:p-6 space-y-4 transition-all"
+              className="w-full rounded-2xl bg-[#0F172A] border border-slate-800 p-4 sm:p-6 lg:p-7 space-y-4 sm:space-y-5 transition-all"
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-3.5">
                 <div>
@@ -328,99 +337,125 @@ export default function App() {
                 </div>
               </div>
 
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-4xl">
                 {activeSegment.summary}
               </p>
 
-              {/* Lista de Recursos Compacta */}
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+              {/* Lista de Recursos Alinhada na Grade */}
+              <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3.5 pt-1">
                 {activeSegment.features.map((feat) => (
                   <li
                     key={feat.title}
-                    className="flex items-start gap-2 p-2.5 rounded-xl bg-[#080E18]/70 border border-slate-800/70"
+                    className="flex items-start gap-2.5 p-3 sm:p-3.5 rounded-xl bg-[#080E18]/80 border border-slate-800/80"
                   >
-                    <Check className="w-3.5 h-3.5 text-[#F3C742] shrink-0 mt-0.5" />
-                    <div className="text-xs leading-snug">
+                    <Check className="w-4 h-4 text-[#F3C742] shrink-0 mt-0.5" />
+                    <div className="text-xs leading-relaxed">
                       <span className="font-semibold text-white">{feat.title}: </span>
                       <span className="text-slate-300">{feat.detail}</span>
                     </div>
                   </li>
                 ))}
-              </ul>
 
-              <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-end">
-                <a
-                  href={whatsappDirectUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl bg-[#F3C742] hover:bg-[#FF9900] text-[#080E18] text-xs sm:text-sm font-semibold transition-colors cursor-pointer"
-                >
-                  <span>Solicitar Orçamento para {activeSegment.formValue}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </a>
-              </div>
+                {/* Bloco de Ação Direta na Grade para Fechamento Visual Simétrico */}
+                <li className="flex items-center justify-between gap-3 p-3 sm:p-3.5 rounded-xl bg-[#080E18] border border-[#F3C742]/30">
+                  <div className="min-w-0">
+                    <div className="text-[11px] font-mono text-[#F3C742]">
+                      ATENDIMENTO TÉCNICO DIRETO
+                    </div>
+                    <div className="text-xs font-medium text-slate-200 truncate">
+                      Projeto sob medida para {activeSegment.formValue}
+                    </div>
+                  </div>
+                  <a
+                    href={whatsappDirectUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#F3C742] hover:bg-[#FF9900] text-[#080E18] text-xs font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                  >
+                    <span>Solicitar Orçamento</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </section>
 
-        {/* 4. Grade de Especialidades Técnicas (8 Cards) */}
+        {/* PÁGINA 3: Seção de Serviços Especializados (100% da Altura Útil e Alinhada em max-w-7xl) */}
         <section
           id="servicos"
-          className="scroll-mt-14 sm:scroll-mt-20 py-8 sm:py-14 lg:py-16 bg-[#0B1220] border-y border-slate-800/80"
+          className="page-section py-6 sm:py-8 lg:py-10 bg-[#0B1220] border-y border-slate-800/80"
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
-            <div className="space-y-1.5 max-w-2xl">
-              <div className="text-xs font-mono tracking-wider text-[#F3C742]">
-                ESPECIALIDADES TÉCNICAS
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+              <div className="space-y-1 max-w-2xl">
+                <div className="text-xs font-mono tracking-wider text-[#F3C742]">
+                  ESPECIALIDADES TÉCNICAS
+                </div>
+                <h2 className="text-xl sm:text-3xl font-semibold text-white tracking-tight">
+                  Serviços Especializados
+                </h2>
+                <p className="text-slate-300 text-xs sm:text-sm">
+                  Soluções normatizadas executadas diretamente para sua residência, condomínio ou
+                  empresa.
+                </p>
               </div>
-              <h2 className="text-xl sm:text-3xl font-semibold text-white tracking-tight">
-                Serviços Especializados
-              </h2>
-              <p className="text-slate-300 text-xs sm:text-sm">
-                Soluções normatizadas executadas diretamente para sua residência, condomínio ou empresa.
-              </p>
+
+              <a
+                href={whatsappDirectUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-[#F3C742] hover:text-[#FF9900] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              >
+                <span>Falar com técnico no WhatsApp</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
               {SPECIALTIES.map((spec) => (
                 <div
                   key={spec.id}
-                  className="flex flex-col justify-between rounded-xl p-4 sm:p-5 transition-colors border bg-[#080E18] border-slate-800 hover:border-[#F3C742]/60"
+                  className="flex flex-col justify-between rounded-xl p-3 sm:p-4 transition-colors border bg-[#080E18] border-slate-800 hover:border-[#F3C742]/60"
                 >
-                  <div className="space-y-2.5">
+                  <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#0F172A] border border-slate-800 flex items-center justify-center">
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#0F172A] border border-slate-800 flex items-center justify-center">
                         {renderSpecialtyIcon(spec.iconName)}
                       </div>
-                      <span className="text-[11px] font-mono text-slate-400">{spec.number}</span>
+                      <span className="text-[10px] sm:text-[11px] font-mono text-slate-400">
+                        {spec.number}
+                      </span>
                     </div>
 
                     <div className="space-y-1">
-                      <h3 className="text-sm sm:text-base font-semibold text-white leading-snug">
+                      <h3 className="text-xs sm:text-sm font-semibold text-white leading-snug">
                         {spec.title}
                       </h3>
-                      <p className="text-xs text-slate-300 leading-relaxed">
+                      <p className="hidden sm:line-clamp-2 text-xs text-slate-300 leading-relaxed">
                         {spec.description}
                       </p>
                     </div>
 
-                    <div className="text-[11px] font-mono text-[#F3C742]">{spec.norm}</div>
+                    <div className="text-[10px] sm:text-[11px] font-mono text-[#F3C742] truncate">
+                      {spec.norm}
+                    </div>
                   </div>
 
-                  <div className="mt-3.5 pt-3 border-t border-slate-800 flex items-center justify-between gap-2">
+                  <div className="mt-2.5 sm:mt-3 pt-2.5 border-t border-slate-800 flex items-center justify-between gap-1.5">
                     <a
                       href={whatsappDirectUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors whitespace-nowrap cursor-pointer bg-[#F3C742] hover:bg-[#FF9900] text-[#080E18]"
+                      className="px-2.5 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold transition-colors whitespace-nowrap cursor-pointer bg-[#F3C742] hover:bg-[#FF9900] text-[#080E18]"
                     >
-                      Solicitar Orçamento
+                      Orçar
                     </a>
 
                     <button
                       type="button"
                       onClick={() => setActiveModalSpecialty(spec)}
-                      className="text-xs text-slate-400 hover:text-[#F3C742] transition-colors cursor-pointer"
+                      className="text-[11px] sm:text-xs text-slate-400 hover:text-[#F3C742] transition-colors cursor-pointer whitespace-nowrap"
                     >
                       Detalhes →
                     </button>
@@ -431,22 +466,23 @@ export default function App() {
           </div>
         </section>
 
-        {/* 5. Portfólio de Projetos Recentes */}
+        {/* PÁGINA 4: Seção de Portfólio (100% da Altura Útil e Alinhada em max-w-7xl) */}
         <section
           id="portfolio"
-          className="scroll-mt-14 sm:scroll-mt-20 py-8 sm:py-14 lg:py-16 bg-[#080E18]"
+          className="page-section py-6 sm:py-10 bg-[#080E18]"
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-              <div className="space-y-2 max-w-2xl">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5 sm:space-y-7">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+              <div className="space-y-1.5 max-w-2xl">
                 <div className="text-xs font-mono tracking-wider text-[#F3C742]">
                   PORTFÓLIO TÉCNICO
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight">
+                <h2 className="text-xl sm:text-3xl font-semibold text-white tracking-tight">
                   Projetos Executados em Campo Grande - MS
                 </h2>
                 <p className="text-slate-300 text-xs sm:text-sm">
-                  Exemplos de instalações de portaria autônoma, quadros QGBT, energia solar e CFTV IA.
+                  Exemplos de instalações de portaria autônoma, quadros QGBT, energia solar e CFTV
+                  IA.
                 </p>
               </div>
 
@@ -460,7 +496,7 @@ export default function App() {
               </a>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
               {PORTFOLIO_PROJECTS.map((project) => (
                 <div
                   key={project.id}
@@ -468,7 +504,7 @@ export default function App() {
                 >
                   <div>
                     <ProjectSchematicGraphic type={project.schematicType} />
-                    <div className="p-4 sm:p-5 space-y-2">
+                    <div className="p-3.5 sm:p-4 space-y-1.5">
                       <div className="flex items-center gap-1.5 text-[11px] font-mono text-slate-400">
                         <span className="text-[#F3C742]">{project.category}</span>
                         <span>·</span>
@@ -483,7 +519,7 @@ export default function App() {
                     </div>
                   </div>
 
-                  <div className="px-4 pb-4 sm:px-5 sm:pb-5 pt-2 border-t border-slate-800 flex items-center justify-between gap-2">
+                  <div className="px-3.5 pb-3.5 sm:px-4 sm:pb-4 pt-2 border-t border-slate-800 flex items-center justify-between gap-2">
                     <span className="text-xs font-mono text-[#F3C742] truncate">
                       {project.metrics}
                     </span>
@@ -501,134 +537,9 @@ export default function App() {
           </div>
         </section>
 
-        {/* 6. Seção de Contato Simplificada */}
-        <ContactQuoteSection />
+        {/* PÁGINA 5: Seção de Contato Simplificada + Rodapé Integrado (100% da Altura Útil e Alinhada em max-w-7xl) */}
+        <ContactQuoteSection onNavigate={scrollToSection} />
       </main>
-
-      {/* 7. Footer Institucional Simplificado */}
-      <footer className="bg-[#060A12] border-t border-slate-800/90 pt-10 pb-10 text-slate-400">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8">
-            {/* Logo e Resumo Institucional */}
-            <div className="lg:col-span-6 space-y-3">
-              <div className="flex items-center gap-3 text-white font-bold">
-                <img
-                  src="/assets/aistudio/logo-totus-amarelo__1__f1fd2d6e.png"
-                  alt="TOTU'S TECNOLOGIA"
-                  className="w-10 h-10 object-contain rounded-lg"
-                />
-                <span className="font-brand font-bold tracking-wider text-base sm:text-lg">
-                  TOTU&apos;S TECNOLOGIA
-                </span>
-              </div>
-              <p className="text-xs text-slate-400 leading-relaxed max-w-md">
-                Soluções em segurança eletrônica, redes e infraestrutura elétrica normatizada em
-                Campo Grande - MS e região.
-              </p>
-              <div className="text-[11px] font-mono text-slate-500">
-                NBR 5410 · NBR 16690 · NBR 17240 · NBR 14565 · NR-10
-              </div>
-            </div>
-
-            {/* Links Rápidos */}
-            <div className="lg:col-span-3 space-y-2">
-              <div className="text-xs font-semibold uppercase tracking-wider text-slate-200">
-                Navegação
-              </div>
-              <ul className="space-y-1.5 text-xs">
-                <li>
-                  <a
-                    href="#solucoes"
-                    onClick={(e) => scrollToSection('solucoes', e)}
-                    className="hover:text-[#F3C742] transition-colors"
-                  >
-                    Soluções por Segmento
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#servicos"
-                    onClick={(e) => scrollToSection('servicos', e)}
-                    className="hover:text-[#F3C742] transition-colors"
-                  >
-                    Especialidades Técnicas
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#portfolio"
-                    onClick={(e) => scrollToSection('portfolio', e)}
-                    className="hover:text-[#F3C742] transition-colors"
-                  >
-                    Portfólio de Projetos
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={whatsappDirectUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-[#F3C742] transition-colors"
-                  >
-                    Solicitar Orçamento
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Contato Direto */}
-            <div className="lg:col-span-3 space-y-2">
-              <div className="text-xs font-semibold uppercase tracking-wider text-slate-200">
-                Atendimento
-              </div>
-              <ul className="space-y-1.5 text-xs">
-                <li>
-                  <span className="text-slate-500">WhatsApp: </span>
-                  <a
-                    href={whatsappDirectUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-slate-200 hover:text-[#F3C742] font-mono transition-colors"
-                  >
-                    {COMPANY_INFO.phoneDisplay}
-                  </a>
-                </li>
-                <li>
-                  <span className="text-slate-500">E-mail: </span>
-                  <a
-                    href={`mailto:${COMPANY_INFO.email}`}
-                    className="text-slate-200 hover:text-[#F3C742] transition-colors"
-                  >
-                    {COMPANY_INFO.email}
-                  </a>
-                </li>
-                <li>
-                  <span className="text-slate-500">Instagram: </span>
-                  <a
-                    href={COMPANY_INFO.instagramUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-slate-200 hover:text-[#F3C742] transition-colors"
-                  >
-                    {COMPANY_INFO.instagramHandle}
-                  </a>
-                </li>
-                <li>
-                  <span className="text-slate-500">Local: </span>
-                  <span className="text-slate-300">{COMPANY_INFO.location}</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
-            <div>
-              © {new Date().getFullYear()} TOTU&apos;S TECNOLOGIA. Todos os direitos reservados.
-            </div>
-            <div>Campo Grande - MS</div>
-          </div>
-        </div>
-      </footer>
 
       {/* Botão Flutuante do WhatsApp */}
       <a

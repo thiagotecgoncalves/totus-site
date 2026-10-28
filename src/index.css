@@ -13,12 +13,12 @@
     background-color: #080E18;
     color: #F8FAFC;
     scroll-behavior: smooth;
-    scroll-padding-top: 4.5rem;
+    scroll-padding-top: 3.5rem;
   }
 
   @media (min-width: 640px) {
     html {
-      scroll-padding-top: 5.5rem;
+      scroll-padding-top: 5rem;
     }
   }
 
@@ -29,6 +29,21 @@
 
   .font-brand {
     font-family: var(--font-brand);
+  }
+}
+
+.page-section {
+  min-height: calc(100dvh - 3.5rem);
+  scroll-margin-top: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .page-section {
+    min-height: calc(100dvh - 5rem);
+    scroll-margin-top: 5rem;
   }
 }
 
