@@ -196,7 +196,10 @@ export function ContactQuoteSection({
   };
 
   return (
-    <section id="contato" className="py-12 sm:py-16 lg:py-20 bg-[#080E18] border-t border-slate-800/80">
+    <section
+      id="contato"
+      className="scroll-mt-14 sm:scroll-mt-20 py-8 sm:py-14 lg:py-16 bg-[#080E18] border-t border-slate-800/80"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Direct Technical Contact & Institutional Info */}

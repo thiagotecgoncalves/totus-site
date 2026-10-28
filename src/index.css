@@ -12,6 +12,13 @@
     background-color: #080E18;
     color: #F8FAFC;
     scroll-behavior: smooth;
+    scroll-padding-top: 4.5rem;
+  }
+
+  @media (min-width: 640px) {
+    html {
+      scroll-padding-top: 5.5rem;
+    }
   }
 
   h1, h2, .font-display {

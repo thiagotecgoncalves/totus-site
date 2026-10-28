@@ -56,7 +56,7 @@ export function HeroFilamentCircuitVisual({
   const current = modeDetails[activeMode];
 
   return (
-    <div className="relative w-full h-full min-h-[340px] sm:min-h-[420px] lg:min-h-[500px] flex flex-col justify-between rounded-2xl bg-[#0B1220] border border-slate-800/90 p-4 sm:p-7 overflow-hidden">
+    <div className="relative w-full h-full min-h-[260px] sm:min-h-[380px] lg:min-h-[450px] flex flex-col justify-between rounded-2xl bg-[#0B1220] border border-slate-800/90 p-3.5 sm:p-6 overflow-hidden">
       {/* Subtle Ambient Radial Glow matching the reference image */}
       <div
         className="pointer-events-none absolute inset-0"
@@ -67,24 +67,26 @@ export function HeroFilamentCircuitVisual({
       />
 
       {/* Top Technical Header inside Visual Frame */}
-      <div className="relative z-10 flex items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
-        <div className="text-xs font-mono text-slate-400">
-          <span>SISTEMA TÉCNICO INTEGRADO</span>
-          <span className="mx-2 text-slate-600">·</span>
-          <span className="text-[#F3C742]">{current.code}</span>
-        </div>
-        <span className="text-xs font-mono text-slate-400 tabular-nums">{current.metric}</span>
+      <div className="relative z-10 flex items-center justify-between gap-2 border-b border-slate-800/80 pb-2.5 text-[11px] font-mono">
+        <span className="text-[#F3C742] truncate">{current.code}</span>
+        <span className="text-slate-400 tabular-nums shrink-0">{current.metric}</span>
       </div>
 
-      {/* Central Glowing Filament Bulb + Technical Circuitry SVG (Inspired by reference image) */}
-      <div className="relative z-10 my-auto flex items-center justify-center py-4">
+      {/* Central Interactive Technical Graphic SVG (Switches by activeMode) */}
+      <div className="relative z-10 my-auto flex items-center justify-center py-1">
         <svg
-          viewBox="0 0 420 340"
-          className="w-full max-w-[390px] h-auto select-none"
+          viewBox="0 0 420 310"
+          className="w-full max-w-[330px] sm:max-w-[380px] h-auto select-none transition-all duration-300"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           role="img"
-          aria-label="Ilustração técnica de energia, segurança e automação inteligente"
+          aria-label={
+            activeMode === 'energia'
+              ? 'Ilustração de engenharia elétrica e energia solar'
+              : activeMode === 'seguranca'
+                ? 'Ilustração de câmera CFTV com Inteligência Artificial'
+                : 'Ilustração de cancela automatizada e veículo na portaria CondTotus'
+          }
         >
           <defs>
             <radialGradient id="amberCoreGlow" cx="50%" cy="56%" r="48%">
@@ -102,129 +104,251 @@ export function HeroFilamentCircuitVisual({
               <stop offset="50%" stopColor="#334155" />
               <stop offset="100%" stopColor="#0F172A" />
             </linearGradient>
+            <linearGradient id="cameraBeamGrad" x1="200" y1="160" x2="380" y2="160" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#F3C742" stopOpacity="0.4" />
+              <stop offset="45%" stopColor="#FF9900" stopOpacity="0.15" />
+              <stop offset="100%" stopColor="#FF9900" stopOpacity="0.02" />
+            </linearGradient>
+            <linearGradient id="lprBeamGrad" x1="250" y1="70" x2="165" y2="225" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#F3C742" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#FF9900" stopOpacity="0.05" />
+            </linearGradient>
           </defs>
 
           {/* Ambient Backlight Circle */}
-          <circle cx="210" cy="195" r="145" fill="url(#amberCoreGlow)" />
+          <circle cx="210" cy="175" r="145" fill="url(#amberCoreGlow)" />
 
-          {/* Left & Right Technical Circuit Traces */}
-          <path
-            d="M25 130 H105 L135 160"
-            stroke="#334155"
-            strokeWidth="1.5"
-          />
-          <path
-            d="M25 130 H105 L135 160"
-            stroke="#F3C742"
-            strokeWidth="1.5"
-            className="circuit-trace"
-          />
+          {/* Circuit Traces — Left and Right */}
+          <path d="M25 130 H95 L125 160" stroke="#334155" strokeWidth="1.5" />
+          <path d="M25 130 H95 L125 160" stroke="#F3C742" strokeWidth="1.5" className="circuit-trace" />
           <circle cx="25" cy="130" r="4" fill="#F3C742" />
 
-          <path
-            d="M395 130 H315 L285 160"
-            stroke="#334155"
-            strokeWidth="1.5"
-          />
-          <path
-            d="M395 130 H315 L285 160"
-            stroke="#FF9900"
-            strokeWidth="1.5"
-            className="circuit-trace"
-          />
+          <path d="M395 130 H325 L295 160" stroke="#334155" strokeWidth="1.5" />
+          <path d="M395 130 H325 L295 160" stroke="#FF9900" strokeWidth="1.5" className="circuit-trace" />
           <circle cx="395" cy="130" r="4" fill="#FF9900" />
 
-          <path
-            d="M40 245 H115 L142 220"
-            stroke="#334155"
-            strokeWidth="1.5"
-          />
-          <path
-            d="M40 245 H115 L142 220"
-            stroke="#F3C742"
-            strokeWidth="1.5"
-            className="circuit-trace"
-          />
-          <circle cx="40" cy="245" r="4" fill="#F3C742" />
+          <path d="M35 245 H105 L132 220" stroke="#334155" strokeWidth="1.5" />
+          <path d="M35 245 H105 L132 220" stroke="#F3C742" strokeWidth="1.5" className="circuit-trace" />
+          <circle cx="35" cy="245" r="4" fill="#F3C742" />
 
-          <path
-            d="M380 245 H305 L278 220"
-            stroke="#334155"
-            strokeWidth="1.5"
-          />
-          <path
-            d="M380 245 H305 L278 220"
-            stroke="#FF9900"
-            strokeWidth="1.5"
-            className="circuit-trace"
-          />
-          <circle cx="380" cy="245" r="4" fill="#FF9900" />
+          <path d="M385 245 H315 L288 220" stroke="#334155" strokeWidth="1.5" />
+          <path d="M385 245 H315 L288 220" stroke="#FF9900" strokeWidth="1.5" className="circuit-trace" />
+          <circle cx="385" cy="245" r="4" fill="#FF9900" />
 
-          {/* Top Power Cord descending into Socket */}
-          <line x1="210" y1="0" x2="210" y2="38" stroke="#FF9900" strokeWidth="5" />
-          <line x1="210" y1="0" x2="210" y2="38" stroke="#F3C742" strokeWidth="1.5" />
+          {/* 1. MODO ENERGIA: Lâmpada e Filamento Tecnológico */}
+          {activeMode === 'energia' && (
+            <g>
+              {/* Power Cord into Socket */}
+              <line x1="210" y1="0" x2="210" y2="38" stroke="#FF9900" strokeWidth="5" />
+              <line x1="210" y1="0" x2="210" y2="38" stroke="#F3C742" strokeWidth="1.5" />
 
-          {/* Matte Industrial Bulb Socket */}
-          <rect
-            x="184"
-            y="34"
-            width="52"
-            height="16"
-            rx="4"
-            fill="url(#socketMetal)"
-            stroke="#475569"
-            strokeWidth="1.2"
-          />
-          <rect
-            x="176"
-            y="48"
-            width="68"
-            height="54"
-            rx="6"
-            fill="url(#socketMetal)"
-            stroke="#475569"
-            strokeWidth="1.5"
-          />
-          <line x1="176" y1="66" x2="244" y2="66" stroke="#1E293B" strokeWidth="2" />
-          <line x1="176" y1="84" x2="244" y2="84" stroke="#1E293B" strokeWidth="2" />
+              {/* Socket Industrial Metal */}
+              <rect x="184" y="34" width="52" height="16" rx="4" fill="url(#socketMetal)" stroke="#475569" strokeWidth="1.2" />
+              <rect x="176" y="48" width="68" height="54" rx="6" fill="url(#socketMetal)" stroke="#475569" strokeWidth="1.5" />
+              <line x1="176" y1="66" x2="244" y2="66" stroke="#1E293B" strokeWidth="2" />
+              <line x1="176" y1="84" x2="244" y2="84" stroke="#1E293B" strokeWidth="2" />
 
-          {/* Glowing Amber Bulb Contour (Inspired by Voltex reference image) */}
-          <g className="filament-glow">
-            <path
-              d="M182 102 C182 132, 138 164, 138 214 C138 258, 169 292, 210 292 C251 292, 282 258, 282 214 C282 164, 238 132, 238 102 Z"
-              stroke="url(#bulbOutline)"
-              strokeWidth="4.5"
-              fill="rgba(255, 153, 0, 0.05)"
-            />
-            {/* Inner precision filament & smart shield geometry */}
-            <path
-              d="M196 102 V168 L178 198 L210 182 L242 198 L224 168 V102"
-              stroke="#F3C742"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <circle
-              cx="210"
-              cy="224"
-              r="26"
-              stroke="#FF9900"
-              strokeWidth="1.75"
-              strokeDasharray="4 4"
-            />
-            <path
-              d="M210 207 L198 225 H211 L208 241 L222 221 H209 L210 207 Z"
-              fill="#F3C742"
-            />
-          </g>
+              {/* Glowing Amber Bulb Contour */}
+              <g className="filament-glow">
+                <path
+                  d="M182 102 C182 132, 138 164, 138 214 C138 258, 169 292, 210 292 C251 292, 282 258, 282 214 C282 164, 238 132, 238 102 Z"
+                  stroke="url(#bulbOutline)"
+                  strokeWidth="4.5"
+                  fill="rgba(255, 153, 0, 0.05)"
+                />
+                {/* Precision Filament Core */}
+                <path
+                  d="M196 102 V168 L178 198 L210 182 L242 198 L224 168 V102"
+                  stroke="#F3C742"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <circle cx="210" cy="224" r="26" stroke="#FF9900" strokeWidth="1.75" strokeDasharray="4 4" />
+                <path d="M210 207 L198 225 H211 L208 241 L222 221 H209 L210 207 Z" fill="#F3C742" />
+              </g>
 
-          {/* Technical Callout Labels around the Core */}
-          <g fontFamily="JetBrains Mono, monospace" fontSize="10" fill="#94A3B8">
-            <text x="24" y="118">QGBT · NBR 5410</text>
-            <text x="302" y="118">SOLAR · FOTOVOLTAICO</text>
-            <text x="24" y="264">CFTV IA · COLORVU</text>
-            <text x="294" y="264">PORTARIA CONDTOTU'S</text>
-          </g>
+              {/* Technical Labels */}
+              <g fontFamily="JetBrains Mono, monospace" fontSize="10" fill="#94A3B8">
+                <text x="24" y="118">QGBT · NBR 5410</text>
+                <text x="396" y="118" textAnchor="end">SOLAR · FOTOVOLTAICO</text>
+                <text x="24" y="264">CORRENTE ESTABILIZADA</text>
+                <text x="396" y="264" textAnchor="end">PROTEÇÃO DPS CLASSE II</text>
+              </g>
+            </g>
+          )}
+
+          {/* 2. MODO SEGURANÇA: Câmera CFTV com IA ColorVu & Feixe Analítico */}
+          {activeMode === 'seguranca' && (
+            <g>
+              {/* Camera Wall Mount & Articulated Arm */}
+              <path d="M50 85 H92 V128 H120" stroke="#475569" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+              <circle cx="92" cy="128" r="8" fill="#1E293B" stroke="#F3C742" strokeWidth="2" />
+              <rect x="42" y="70" width="16" height="34" rx="3" fill="url(#socketMetal)" stroke="#334155" strokeWidth="1.5" />
+
+              {/* PoE Network Cable Conduit */}
+              <line x1="50" y1="85" x2="120" y2="128" stroke="#F3C742" strokeWidth="1.5" strokeDasharray="4 4" />
+
+              {/* Camera Main Body & Hood (Bullet 4K ColorVu) */}
+              <g className="filament-glow">
+                {/* Sunshield / Visor Hood */}
+                <path
+                  d="M110 102 H235 L248 124 H116 Z"
+                  fill="#1E293B"
+                  stroke="#F3C742"
+                  strokeWidth="2"
+                />
+                {/* Camera Housing Body */}
+                <rect
+                  x="116"
+                  y="120"
+                  width="112"
+                  height="72"
+                  rx="10"
+                  fill="url(#socketMetal)"
+                  stroke="#475569"
+                  strokeWidth="2"
+                />
+                {/* Camera Lens Bezel */}
+                <ellipse cx="228" cy="156" rx="14" ry="34" fill="#0F172A" stroke="url(#bulbOutline)" strokeWidth="3.5" />
+                <ellipse cx="228" cy="156" rx="8" ry="22" fill="#080E18" stroke="#FF9900" strokeWidth="2" />
+                {/* Central Optical Sensor Aperture */}
+                <circle cx="228" cy="156" r="6" fill="#F3C742" />
+                {/* ColorVu Auxiliary Lighting Diode */}
+                <circle cx="224" cy="132" r="3" fill="#FF9900" />
+                <circle cx="224" cy="180" r="3" fill="#FF9900" />
+              </g>
+
+              {/* Analytical AI Scanning Cone (Feixe de Detecção IA) */}
+              <polygon
+                points="232,156 390,88 390,224"
+                fill="url(#cameraBeamGrad)"
+              />
+              <line x1="232" y1="156" x2="390" y2="88" stroke="#F3C742" strokeWidth="1.5" strokeDasharray="5 5" />
+              <line x1="232" y1="156" x2="390" y2="224" stroke="#F3C742" strokeWidth="1.5" strokeDasharray="5 5" />
+
+              {/* AI Recognition Target Bounding Box (Detecção Humana/Veicular) */}
+              <g>
+                <rect
+                  x="305"
+                  y="114"
+                  width="78"
+                  height="84"
+                  rx="6"
+                  stroke="#F3C742"
+                  strokeWidth="1.75"
+                  fill="rgba(243, 199, 66, 0.08)"
+                />
+                {/* Corner Target Brackets */}
+                <path d="M305 128 V114 H319" stroke="#FF9900" strokeWidth="2.5" />
+                <path d="M369 114 H383 V128" stroke="#FF9900" strokeWidth="2.5" />
+                <path d="M305 184 V198 H319" stroke="#FF9900" strokeWidth="2.5" />
+                <path d="M369 198 H383 V184" stroke="#FF9900" strokeWidth="2.5" />
+
+                {/* Target Crosshairs */}
+                <circle cx="344" cy="156" r="14" stroke="#F3C742" strokeWidth="1.5" strokeDasharray="3 3" />
+                <line x1="344" y1="136" x2="344" y2="176" stroke="#F3C742" strokeWidth="1" />
+                <line x1="324" y1="156" x2="364" y2="156" stroke="#F3C742" strokeWidth="1" />
+              </g>
+
+              {/* Technical Labels */}
+              <g fontFamily="JetBrains Mono, monospace" fontSize="10" fill="#94A3B8">
+                <text x="24" y="118">CFTV IP 4K · COLORVU</text>
+                <text x="396" y="104" textAnchor="end" fill="#F3C742">IA HUMANO / VEÍCULO</text>
+                <text x="24" y="264">CERCA VIRTUAL ATIVA</text>
+                <text x="396" y="264" textAnchor="end">DETECÇÃO 24H COLORIDA</text>
+              </g>
+            </g>
+          )}
+
+          {/* 3. MODO CONDTOTU'S: Cancela Automatizada e Carro com Leitura de Placa (LPR) */}
+          {activeMode === 'condtotus' && (
+            <g>
+              {/* Asfalto / Guia do Portão de Acesso */}
+              <line x1="20" y1="230" x2="400" y2="230" stroke="#334155" strokeWidth="3" />
+              <line x1="30" y1="234" x2="390" y2="234" stroke="#1E293B" strokeWidth="2" strokeDasharray="16 10" />
+
+              {/* Carro em Aproximação (Silhueta Moderna com Faróis e Placa LPR) */}
+              <g>
+                {/* Chassi do Veículo */}
+                <path
+                  d="M32 216 L48 190 L85 184 L118 152 L172 152 L198 184 L232 190 L242 216 Z"
+                  fill="#0F172A"
+                  stroke="#475569"
+                  strokeWidth="2"
+                />
+                {/* Linha de Teto & Vidros em Âmbar */}
+                <path
+                  d="M92 184 L122 158 H168 L190 184 Z"
+                  fill="rgba(243, 199, 66, 0.12)"
+                  stroke="#F3C742"
+                  strokeWidth="1.5"
+                />
+                {/* Rodas com Detalhe Metálico */}
+                <circle cx="78" cy="216" r="14" fill="#080E18" stroke="#F3C742" strokeWidth="2" />
+                <circle cx="78" cy="216" r="6" fill="#1E293B" />
+                <circle cx="196" cy="216" r="14" fill="#080E18" stroke="#F3C742" strokeWidth="2" />
+                <circle cx="196" cy="216" r="6" fill="#1E293B" />
+
+                {/* Farol Dianteiro com Feixe */}
+                <polygon points="234,196 280,188 280,214 234,204" fill="rgba(243, 199, 66, 0.18)" />
+                <path d="M228 196 H238 L235 204 H226 Z" fill="#F3C742" />
+
+                {/* Placa Dianteira Destacada com Foco LPR */}
+                <rect x="226" y="208" width="18" height="9" rx="1.5" fill="#080E18" stroke="#F3C742" strokeWidth="1.5" />
+                <line x1="229" y1="212" x2="241" y2="212" stroke="#FF9900" strokeWidth="1.5" />
+
+                {/* Alvo Bounding Box do LPR na Placa */}
+                <rect x="218" y="202" width="34" height="20" rx="3" stroke="#FF9900" strokeWidth="1.5" strokeDasharray="3 3" />
+              </g>
+
+              {/* Totem da Cancela (Barreira Automatizada CondTotu's) */}
+              <g className="filament-glow">
+                {/* Pedestal Vertical */}
+                <rect x="278" y="132" width="36" height="98" rx="6" fill="url(#socketMetal)" stroke="#F3C742" strokeWidth="2" />
+                {/* Eixo de Articulação */}
+                <circle cx="296" cy="150" r="12" fill="#080E18" stroke="#FF9900" strokeWidth="2" />
+                <circle cx="296" cy="150" r="5" fill="#F3C742" />
+                {/* Sinalizador LED no Topo do Totem */}
+                <rect x="290" y="118" width="12" height="14" rx="3" fill="#FF9900" stroke="#F3C742" strokeWidth="1.2" />
+              </g>
+
+              {/* Cancela (Haste da Barreira) — Em Movimento de Abertura Elevada */}
+              <g transform="rotate(-32 296 150)">
+                {/* Haste Principal */}
+                <rect x="296" y="145" width="138" height="10" rx="2" fill="#F3C742" stroke="#FF9900" strokeWidth="1.5" />
+                {/* Faixas Reflexivas da Cancela */}
+                <line x1="322" y1="145" x2="330" y2="155" stroke="#080E18" strokeWidth="4" />
+                <line x1="348" y1="145" x2="356" y2="155" stroke="#080E18" strokeWidth="4" />
+                <line x1="374" y1="145" x2="382" y2="155" stroke="#080E18" strokeWidth="4" />
+                <line x1="400" y1="145" x2="408" y2="155" stroke="#080E18" strokeWidth="4" />
+              </g>
+
+              {/* Câmera LPR no Topo Escaneando a Placa do Carro */}
+              <g>
+                <rect x="264" y="68" width="28" height="16" rx="4" fill="#1E293B" stroke="#F3C742" strokeWidth="1.5" />
+                <line x1="278" y1="84" x2="278" y2="132" stroke="#475569" strokeWidth="3" />
+                {/* Feixe Laser LPR descendo até a placa */}
+                <polygon points="266,80 218,206 254,206" fill="url(#lprBeamGrad)" />
+                <line x1="278" y1="80" x2="236" y2="212" stroke="#F3C742" strokeWidth="1.5" strokeDasharray="4 3" />
+              </g>
+
+              {/* Ícone de Liberação e Checkmark */}
+              <circle cx="348" cy="88" r="14" fill="#080E18" stroke="#F3C742" strokeWidth="2" />
+              <path d="M342 88 L346 92 L354 84" stroke="#F3C742" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              <text x="328" y="112" fill="#F3C742" fontFamily="JetBrains Mono, monospace" fontSize="9">
+                ACESSO LIBERADO
+              </text>
+
+              {/* Technical Labels */}
+              <g fontFamily="JetBrains Mono, monospace" fontSize="10" fill="#94A3B8">
+                <text x="24" y="118">LEITURA LPR VEICULAR</text>
+                <text x="396" y="56" textAnchor="end" fill="#F3C742">PORTARIA CONDTOTU'S</text>
+                <text x="24" y="264">LIBERAÇÃO &lt; 0.4s</text>
+                <text x="396" y="264" textAnchor="end">AUTOMAÇÃO DE CANCELA</text>
+              </g>
+            </g>
+          )}
         </svg>
       </div>
 
