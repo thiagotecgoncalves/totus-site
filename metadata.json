@@ -1,0 +1,6 @@
+{
+  "name": "TOTU'S TECNOLOGIA — Engenharia Elétrica, Segurança e Automação",
+  "description": "Projetos, instalações normatizadas e manutenção especializada em elétrica, CFTV com IA, energia solar, portaria autônoma CondTotu's e automação predial em Campo Grande - MS.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

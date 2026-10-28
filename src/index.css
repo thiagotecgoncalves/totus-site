@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", "Cinzel", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    background-color: #080E18;
+    color: #F8FAFC;
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, .font-display {
+    font-family: var(--font-serif);
+    text-wrap: balance;
+  }
+}
+
+@keyframes filamentPulse {
+  0%, 100% {
+    opacity: 0.92;
+    filter: drop-shadow(0 0 14px rgba(243, 199, 66, 0.75)) drop-shadow(0 0 36px rgba(255, 153, 0, 0.45));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 22px rgba(243, 199, 66, 0.95)) drop-shadow(0 0 52px rgba(255, 153, 0, 0.65));
+  }
+}
+
+@keyframes currentFlow {
+  0% {
+    stroke-dashoffset: 120;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.filament-glow {
+  animation: filamentPulse 4s ease-in-out infinite;
+}
+
+.circuit-trace {
+  stroke-dasharray: 8 12;
+  animation: currentFlow 3.5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filament-glow,
+  .circuit-trace {
+    animation: none;
+  }
+}
